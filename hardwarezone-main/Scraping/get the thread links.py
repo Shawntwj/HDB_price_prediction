@@ -15,8 +15,8 @@ driver = webdriver.Chrome(PATH)
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
 link_csv_path = dir_path + "/" + "links.csv"
-
-csvFile = open("threads.csv", "a", newline='', encoding="utf-8")
+save_thread_path = dir_path + "/" +"threads.csv"
+csvFile = open( save_thread_path, "a", newline='', encoding="utf-8-sig")
 csvWriter = csv.writer(csvFile)
 
 # custom check fields to only get threads that have been recently updated or within the month
@@ -33,21 +33,26 @@ with open(link_csv_path) as file_handler:
         max_page = driver.find_element("xpath","//li[@class='pageNav-page ']/a").get_attribute("innerHTML")
 
         for j in range(int(max_page)):
-            if j == 2:
+            if j == 206:
                 break
-            time.sleep(2)
+            time.sleep(5)
             results = driver.find_elements("xpath","//div[@class='structItem-title']/a")
             results_date = driver.find_elements("xpath","//time[@class='structItem-latestDate u-dt']")
-            for i in range(len(results)):
-                count += 1
+
+            if results_date != results:
+                minlen = min(len(results_date),len(results))
+            else:
+                minlen = len(results_date)
+                
+            for i in range(minlen):
                 link = results[i].get_attribute("href")
                 thread_title =  results[i].text
                 date = results_date[i].text
-                print(link)
-                print(thread_title)
-                print(date)
                 csvWriter.writerow((forum_title,thread_title,link,date))
-
+                
+                print(link)
+                print("here")
+                
             try:
                 print('\n',count, " threads scraped")
                 print("thread page", j+1 ,"done")
@@ -59,10 +64,11 @@ with open(link_csv_path) as file_handler:
                 nextbutton = driver.find_element("xpath","//a[@class='pageNav-jump pageNav-jump--next']")
                 nextbutton.click()
 
-            print("all thread done")
-            # break
+                    
+        #     print("all thread in page done")
+             
 
-        print("topic ", forum_title, " done")
+        # print("topic ", forum_title, " done")
 
 
 
