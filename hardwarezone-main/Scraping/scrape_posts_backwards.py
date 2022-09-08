@@ -33,12 +33,15 @@ thread_csv_file = dir_path + "/" + "hdb_threads.csv"
 # datedict = {"Saturday":"21/8/21","Sunday":"22/8/21","Monday":"23/8/21","Tuesday":"17/8/21","Wednesday":"18/8/21","Thursday":"19/8/21","Friday":"20/8/21","Yesterday":"25/8/21","Today":"26/8/21"}
 
 count = 0
+split = 0
 
 with open(thread_csv_file, encoding="utf8") as file_handler:
 
     # loop through the links
     for row in csv.reader(file_handler):
-
+        split += 1 
+        if split < 1000:
+            continue
         doneLinkcsvWriter.writerow(row)
         thread_link = row[2]
         thread_title = row[1]
