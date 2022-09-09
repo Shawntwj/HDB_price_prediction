@@ -40,72 +40,72 @@ with open(thread_csv_file, encoding="utf8") as file_handler:
     # loop through the links
     for row in csv.reader(file_handler):
         split += 1 
-        if split < 1000:
-            continue
-        doneLinkcsvWriter.writerow(row)
-        thread_link = row[2]
-        thread_title = row[1]
-        topic_name = row[0]
-
-        print()
-        print('topic is now: ', topic_name, " : " , thread_title)
-        print("looking at: " , thread_link)
-
-        print(thread_link)
-        driver.get(thread_link)
-        time.sleep(5)
-
-        # find the number of pages 
-        try:
-            max_page = driver.find_elements("xpath","//li[@class='pageNav-page ']/a")[-1].get_attribute("innerHTML")
-            last_page = driver.find_elements("xpath","//li[@class='pageNav-page ']/a")[-1]
-        except:
-            max_page = 1
-            last_page = ""
-
-        print("this thread has" ,max_page, "pages")
-
-        
-        # go to the last page for recent post
-        if last_page:
-            last_page.click()
-
-        # loop according to the number of pages in thread
-        for i in range(int(max_page)):
-            time.sleep(5)
-            results = driver.find_elements("xpath","//div[@class='message-inner']")
-            # loop according to the number of posts in one page
-            for result in results:
-                # scrape the information from the post
-                try:
-                    membername = result.find_element("xpath",".//h4[@class='message-name']").text
-                    memberlink = result.find_element("xpath",".//h4[@class='message-name']/a").get_attribute("href")
-                    usertitle = result.find_element("xpath",".//h5[@class='userTitle message-userTitle']").text
-                    content = result.find_element("xpath",".//div[@class='bbWrapper']").text
-                    date = result.find_element("xpath",".//time").text
-
-                    csvWriter.writerow((topic_name, thread_title, thread_link ,membername,memberlink,usertitle,date,content))
-
-                # skip post if there is missing information Eg deleted content
-                except:
-                    pass
-                
-#                 # week control stop scraping the thread and exit thread
-#                 if this_week:
-#                     pass
-#                 else:
-#                     break 
-            print("thread page", i+1 ,"done")
-
-            try: 
-                nextbutton = driver.find_element("xpath","//a[@class='pageNav-jump pageNav-jump--prev']")
-                nextbutton.click()
-            except:
-                print("all of thread done")
-                break
+        if split >= 1000 and split <= 2000:
+            print(split)
             
-        count+=1
-        print(count, " threads done")
+            doneLinkcsvWriter.writerow(row)
+            thread_link = row[2]
+            thread_title = row[1]
+            topic_name = row[0]
+
+            print()
+            print('topic is now: ', topic_name, " : " , thread_title)
+            print("looking at: " , thread_link)
+
+            print(thread_link)
+            driver.get(thread_link)
+            time.sleep(5)
+
+            # find the number of pages 
+            try:
+                max_page = driver.find_elements("xpath","//li[@class='pageNav-page ']/a")[-1].get_attribute("innerHTML")
+                last_page = driver.find_elements("xpath","//li[@class='pageNav-page ']/a")[-1]
+            except:
+                max_page = 1
+                last_page = ""
+
+            print("this thread has" ,max_page, "pages")
+
+            # go to the last page for recent post
+            if last_page:
+                last_page.click()
+
+            # loop according to the number of pages in thread
+            for i in range(int(max_page)):
+                time.sleep(5)
+                results = driver.find_elements("xpath","//div[@class='message-inner']")
+                # loop according to the number of posts in one page
+                for result in results:
+                    # scrape the information from the post
+                    try:
+                        membername = result.find_element("xpath",".//h4[@class='message-name']").text
+                        memberlink = result.find_element("xpath",".//h4[@class='message-name']/a").get_attribute("href")
+                        usertitle = result.find_element("xpath",".//h5[@class='userTitle message-userTitle']").text
+                        content = result.find_element("xpath",".//div[@class='bbWrapper']").text
+                        date = result.find_element("xpath",".//time").text
+
+                        csvWriter.writerow((topic_name, thread_title, thread_link ,membername,memberlink,usertitle,date,content))
+
+                    # skip post if there is missing information Eg deleted content
+                    except:
+                        pass
+                    
+    #                 # week control stop scraping the thread and exit thread
+    #                 if this_week:
+    #                     pass
+    #                 else:
+    #                     break 
+                print("thread page", i+1 ,"done")
+
+                try: 
+                    nextbutton = driver.find_element("xpath","//a[@class='pageNav-jump pageNav-jump--prev']")
+                    nextbutton.click()
+                except:
+                    print("all of thread done")
+                    break
+                
+            count+=1
+            print(count, " threads done")
     print("---------------all of topics done---------------")
 
 # csvFile.close()
