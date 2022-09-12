@@ -40,7 +40,7 @@ with open(thread_csv_file, encoding="utf8") as file_handler:
     # loop through the links
     for row in csv.reader(file_handler):
         split += 1 
-        if split >= 1000 and split <= 2000:
+        if split > 2000:
             print(split)
             
             doneLinkcsvWriter.writerow(row)
