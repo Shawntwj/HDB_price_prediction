@@ -17,7 +17,11 @@ csvFile = open( save_thread_path, "a", newline='', encoding="utf-8-sig")
 csvWriter = csv.writer(csvFile)
 
 # loop through townlist and get threads for each town
-townlist = [  
+townlist = ['ang mo kio', 'bedok', 'bishan', 'bukit batok', 'bukit merah',
+       'bukit panjang', 'bukit timah', 'central area', 'choa chu kang',
+       'clementi', 'geylang', 'hougang', 'jurong east', 'jurong west',
+       'kallang/whampoa', 'marine parade', 'pasir ris', 'punggol',
+       'queenstown', 'sembawang', 'sengkang', 'serangoon', 'tampines',
        'toa payoh', 'woodlands', 'yishun']
 
 
@@ -25,7 +29,6 @@ URL = "https://www.hardwarezone.com.sg/search/forum/"
 # custom counter
 
 for town in townlist:
-       time.sleep(10)
        # append to end of URL
        URLtown = URL + town 
        print(town)
