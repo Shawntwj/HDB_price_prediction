@@ -27,7 +27,7 @@ doneLinkcsvWriter = csv.writer(doneLinkFile)
 csvWriter = csv.writer(csvFile)
 
 dir_path = os.path.dirname(os.path.realpath(__file__))
-thread_csv_file = dir_path + "/" + "sentiment_links.csv"
+thread_csv_file = dir_path + "/" + "updated_sentiment_link_no_dup.csv"
 
 # datedict = {"Saturday":"21/8/21","Sunday":"22/8/21","Monday":"23/8/21","Tuesday":"17/8/21","Wednesday":"18/8/21","Thursday":"19/8/21","Friday":"20/8/21","Yesterday":"25/8/21","Today":"26/8/21"}
 
