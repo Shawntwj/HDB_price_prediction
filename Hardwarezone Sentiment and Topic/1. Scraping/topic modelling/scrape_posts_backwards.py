@@ -21,7 +21,7 @@ driver = webdriver.Chrome(PATH)
 # doneLinkFile = open("thread p.csv", "w", newline='', encoding="utf-8")
 # csvFile = open("posts.csv", "w", newline='', encoding="utf-8")
 # ------comment out above line and use the below line if you wish to add on to existing excel file and vice versa----------
-csvFile = open("posts.csv", "a", newline='', encoding="utf-8-sig")
+csvFile = open("topic_posts.csv", "a", newline='', encoding="utf-8-sig")
 doneLinkFile = open("thread done.csv", "a", newline='', encoding="utf-8-sig")
 
 doneLinkcsvWriter = csv.writer(doneLinkFile)
